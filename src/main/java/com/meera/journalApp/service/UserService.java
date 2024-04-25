@@ -3,7 +3,10 @@ package com.meera.journalApp.service;
 import com.meera.journalApp.entity.User;
 import com.meera.journalApp.repository.UserRepo;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -20,10 +23,18 @@ public class UserService {
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    private final static Logger logger = LoggerFactory.getLogger(UserService.class);
+
     public void saveUserEntry(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Arrays.asList("USER"));
-        userRepo.save(user);
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(Arrays.asList("USER"));
+            userRepo.save(user);
+        } catch (Exception e) {
+            logger.info("Bhavya's Logger ");
+            logger.error("Bhavya's Logger ");
+            logger.warn("Bhavya's Logger ");
+        }
     }
 
     public void saveUser(User user) {
