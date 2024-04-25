@@ -4,6 +4,7 @@ import com.meera.journalApp.entity.JournalEntry;
 import com.meera.journalApp.entity.User;
 import com.meera.journalApp.repository.JournalEntryRepo;
 import com.meera.journalApp.repository.UserRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Slf4j
 public class JournalEntryService {
 
     @Autowired
@@ -37,7 +39,7 @@ public class JournalEntryService {
             System.out.println("Entry saved with id: " + saved.getId());
             userService.saveUser(user);
         } catch (Exception ex) {
-            System.out.println(ex);
+            log.error("User not found: {}", username);
             throw new RuntimeException();
         }
     }
