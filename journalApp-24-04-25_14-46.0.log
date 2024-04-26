@@ -1,6 +1,0 @@
-14:46:15.551 [http-nio-8080-exec-4] INFO  c.m.journalApp.service.UserService - Bhavya's Logger 
-14:46:15.552 [http-nio-8080-exec-4] ERROR c.m.journalApp.service.UserService - Bhavya's Logger 
-14:46:15.552 [http-nio-8080-exec-4] WARN  c.m.journalApp.service.UserService - Bhavya's Logger 
-14:46:44.391 [http-nio-8080-exec-5] INFO  c.m.journalApp.service.UserService - Bhavya's Logger 
-14:46:44.391 [http-nio-8080-exec-5] ERROR c.m.journalApp.service.UserService - Bhavya's Logger 
-14:46:44.391 [http-nio-8080-exec-5] WARN  c.m.journalApp.service.UserService - Bhavya's Logger 
