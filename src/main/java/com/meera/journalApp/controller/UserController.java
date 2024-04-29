@@ -1,7 +1,9 @@
 package com.meera.journalApp.controller;
 
+import com.meera.journalApp.api.response.WeatherResponse;
 import com.meera.journalApp.entity.User;
 import com.meera.journalApp.service.UserService;
+import com.meera.journalApp.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private WeatherService weatherService;
 
     @PutMapping()
     public ResponseEntity<?> updateUser(@RequestBody User user) {
@@ -40,5 +44,16 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("{city}")
+    public ResponseEntity<?> getUserWeather(@PathVariable String city) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String message = "Hi " + authentication.getName();
+        WeatherResponse response = weatherService.getWeather(city);
+        if(response!=null) {
+            message += ", weather feels like " + response.getCurrent().getFeelslikeC();
+        } 
+        return new ResponseEntity<>(message,HttpStatus.OK);
     }
 }
