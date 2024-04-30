@@ -15,7 +15,7 @@ import java.util.Objects;
 @Service
 public class WeatherService {
 
-    @Value("${api-key.weather}")
+    @Value("${api-key.weather:'defaultAPIKey'}")
     private String apiKey;
 
     @Autowired
