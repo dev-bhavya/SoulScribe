@@ -1,29 +1,35 @@
 package com.meera.journalApp.service;
 
 import com.meera.journalApp.api.response.WeatherResponse;
+import com.meera.journalApp.cache.AppCache;
+import com.meera.journalApp.constants.Placeholders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@Component
+import java.util.Objects;
+
+@Service
 public class WeatherService {
 
-    // https://api.weatherapi.com/v1/current.json?key=<API_KEY>&q=<USER_CITY>
-
-//    @Value("${myapi.api-key}")
-    private String apiKey = "enter-key";
-    private static final String API = "https://api.weatherapi.com/v1/current.json?key=API_KEY&q=CITY";
+    @Value("${api-key.weather:'defaultAPIKey'}")
+    private String apiKey;
 
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private AppCache appCache;
+
     public WeatherResponse getWeather(String city) {
-        String finalAPI = API.replace("API_KEY",apiKey).replace("CITY",city);
+
+        String finalAPI = Objects.requireNonNull(appCache.appCache.get(AppCache.keys.WEATHER_API.toString()).replace(Placeholders.API_KEY, apiKey)).replace(Placeholders.CITY,city);
         ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET, null, WeatherResponse.class);
         return response.getBody();
+
     }
 }
 
